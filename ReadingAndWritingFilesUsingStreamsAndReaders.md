@@ -950,11 +950,150 @@ file.close();
 			return diff;
 		    }
 
+---------------------------------------------------------------------------
+How To Read And Write Images In Java?
 
+-	To read and write image files either from local disk or from URL, javax.imageio.ImageIO class is used
+-	javax.imageio.ImageIO is a final class with some static methods which are very useful for image processing	
 
+	Code Snippet:
+	
+		main {
+			File file = new File("I:/input.jpg");
+			BufferedImage image = null;
+			try
+			{
+				image = ImageIO.read(file);
+				ImageIO.write(image, "jpg", new File("I:/output.jpg"));
+				ImageIO.write(image, "png", new File("I:/output.png"));
+				ImageIO.write(image, "gif", new File("I:/output.gif"));
+				ImageIO.write(image, "bmp", new File("I:/output.bmp"));
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		
+		main {
+			URL url = null;
+			BufferedImage image = null;
+			try
+			{
+				url = new URL("https://...................../NumberPatternPrograms.png");
+			} 
+			catch (MalformedURLException e1) 
+			{
+				e1.printStackTrace();
+			}
+			try
+			{
+				image = ImageIO.read(url);
+				ImageIO.write(image, "jpg", new File("I:/output.jpg"));
+				ImageIO.write(image, "png", new File("I:/output.png"));
+				ImageIO.write(image, "gif", new File("I:/output.gif"));
+				ImageIO.write(image, "bmp", new File("I:/output.bmp"));
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+			 
+			System.out.println("done");
+		}
+		
+------------------------------------------------------------------------------
+## How to sort the text file?
 
+	Code Snippet:
+	
+		public static void main(String[] args)
+		{   
+			BufferedReader reader = null; 
+			BufferedWriter writer = null;
+			//Create an ArrayList object to hold the lines of input file
+			ArrayList<String> lines = new ArrayList<String>();
+			try
+			{
+				//Creating BufferedReader object to read the input file
+				reader = new BufferedReader(new FileReader("C:\\input.txt"));
+				//Reading all the lines of input file one by one and adding them into ArrayList
+				String currentLine = reader.readLine();
+				while (currentLine != null) 
+				{
+					lines.add(currentLine);
+					currentLine = reader.readLine();
+				}
+				//Sorting the ArrayList
+				Collections.sort(lines);
+				//Creating BufferedWriter object to write into output file
+				writer = new BufferedWriter(new FileWriter("C:\\output.txt"));
+				//Writing sorted lines into output file
+				for (String line : lines)
+				{
+					writer.write(line);
+					writer.newLine();
+				}
+			} 
+		
+		public static void main(String[] args)throws IOException
+		{
+			//Creating BufferedReader object to read the input text file
+			BufferedReader reader = new BufferedReader(new FileReader("C:\\input.txt"));
+			//Creating ArrayList to hold Student objects
+			ArrayList<Student> studentRecords = new ArrayList<Student>();
+			//Reading Student records one by one
+			String currentLine = reader.readLine();
+			while (currentLine != null)
+			{
+				String[] studentDetail = currentLine.split(" ");
+				String name = studentDetail[0];
+				int marks = Integer.valueOf(studentDetail[1]);
+				//Creating Student object for every student record and adding it to ArrayList
+				studentRecords.add(new Student(name, marks));
+				currentLine = reader.readLine();
+			}
+			//Sorting ArrayList studentRecords based on marks
+			Collections.sort(studentRecords, new marksCompare());
+			//Creating BufferedWriter object to write into output text file
+			BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\output.txt"));
+			//Writing every studentRecords into output text file
+			for (Student student : studentRecords) 
+			{
+				writer.write(student.name);
+				writer.write(" "+student.marks);
+				writer.newLine();
+			}
+			//Closing the resources
+			reader.close();
+			writer.close();
+		}
+		
+		
+		public class Sort {
 
+			public static void main(String[] args) throws Exception {
+				BufferedReader reader = new BufferedReader(new FileReader("fileToRead"));
+				Map<String, String> map=new TreeMap<String, String>();
+				String line="";
+				while((line=reader.readLine())!=null){
+					map.put(getField(line),line);
+				}
+				reader.close();
+				FileWriter writer = new FileWriter("fileToWrite");
+				for(String val : map.values()){
+					writer.write(val);  
+					writer.write('\n');
+				}
+				writer.close();
+			}
 
+			private static String getField(String line) {
+				return line.split(" ")[0];//extract value you want to sort on
+			}
+		}
+------------------------------------------------------------------------------
 
 
 
