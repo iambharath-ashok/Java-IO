@@ -922,6 +922,33 @@ file.close();
 		50
 		400.25
 		A
+---------------------------------------------------------------------------
+## How to Compare two text files 
+
+	Code Snippet:
+	
+		public static void main(final String[] args) throws IOException {
+			final Path firstFile = Paths.get("/home/src/main/resources/a.txt");
+			final Path secondFile = Paths.get("/home/src/main/resources/b.txt");
+			final List<String> firstFileContent = Files.readAllLines(firstFile,
+			    Charset.defaultCharset());
+			final List<String> secondFileContent = Files.readAllLines(secondFile,
+			    Charset.defaultCharset());
+
+			System.out.println(diffFiles(firstFileContent, secondFileContent));
+			System.out.println(diffFiles(secondFileContent, firstFileContent));
+		    }
+
+		    private static List<String> diffFiles(final List<String> firstFileContent,
+			final List<String> secondFileContent) {
+			final List<String> diff = new ArrayList<String>();
+			for (final String line : firstFileContent) {
+			    if (!secondFileContent.contains(line)) {
+				diff.add(line);
+			    }
+			}
+			return diff;
+		    }
 
 
 
