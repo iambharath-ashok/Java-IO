@@ -105,53 +105,110 @@ file.close();
 	
 	Code Snippet of Reading a CSV file and Parsing it to Java Object:
 	
-		public class ReadCSVWithScanner {
+		public class CsvToPersonUsingScanner {
+
+			public static void createPersonFromCsv(File file) throws IOException {
+
+				if (file != null && file.exists()) {
+
+					BufferedReader br = new BufferedReader(new FileReader(file));
+					String line = null;
+					List<Person> persons = new ArrayList<Person>();
+					while ((line = br.readLine()) != null) {
+						Scanner scan = new Scanner(line);
+						scan.useDelimiter(",");
+						Person p = new Person();
+						int index = 0;
+						while (scan.hasNext()) {
+							switch (index) {
+							case 0:
+								p.setId(scan.nextInt());
+								break;
+							case 1:
+								p.setName(scan.next());
+								break;
+							case 2:
+								p.setRole(scan.next());
+								break;
+							case 3:
+								p.setSalary(scan.next());
+								break;
+							}
+							index++;
+						}
+						persons.add(p);
+					}
+					persons.stream().forEach(System.out::println);
+				}
+
+			}
 
 			public static void main(String[] args) throws IOException {
-				// open file input stream
-				BufferedReader reader = new BufferedReader(new FileReader("employees.csv"));
-
-				// read file line by line
-				String line = null;
-				Scanner scanner = null;
-				int index = 0;
-				List<Employee> empList = new ArrayList<>();
-
-				while ((line = reader.readLine()) != null) {
-					Employee emp = new Employee();
-					scanner = new Scanner(line);
-					scanner.useDelimiter(",");
-					while (scanner.hasNext()) {
-						String data = scanner.next();
-						if (index == 0)
-							emp.setId(Integer.parseInt(data));
-						else if (index == 1)
-							emp.setName(data);
-						else if (index == 2)
-							emp.setRole(data);
-						else if (index == 3)
-							emp.setSalary(data);
-						else
-							System.out.println("invalid data::" + data);
-						index++;
-					}
-					index = 0;
-					empList.add(emp);
-				}
-				//close reader
-				reader.close();
-				System.out.println(empList);	
+				createPersonFromCsv(new File("data/input/emp.txt"));
 			}
+
 		}
-		
+
+		class Person {
+			private int id;
+			private String name;
+			private String role;
+			private String salary;
+
+			public int getId() {
+				return id;
+			}
+
+			public void setId(int id) {
+				this.id = id;
+			}
+
+			public String getName() {
+				return name;
+			}
+
+			public void setName(String name) {
+				this.name = name;
+			}
+
+			public String getRole() {
+				return role;
+			}
+
+			public void setRole(String role) {
+				this.role = role;
+			}
+
+			public String getSalary() {
+				return salary;
+			}
+
+			public void setSalary(String salary) {
+				this.salary = salary;
+			}
+
+			@Override
+			public String toString() {
+				return "Person [id=" + id + ", name=" + name + ", role=" + role + ", salary=" + salary + "]";
+			}
+
+		}
+	Output:
+	
+		Person [id=1, name=Iambharath, role=Developer, salary=5000 USD]
+		Person [id=2, name=Mani, role=Programmer, salary=4000 USD]
+		Person [id=3, name=Avinash, role=Developer, salary=5000 USD]
+		Person [id=4, name=David, role=QA Lead, salary=4000 USD]
+
 	Code Snippet of Using Scanner as Delimiter:
 	
 		public static void main(String[] args) {
 		
 			try {
 				Scanner scan = new Scanner(Paths.get("file1.txt"));
-				scan.useDelimiter(Pattern.compile("\\s\\r"));
-				scan.useDelimiter(Pattern.compile("\\s?\\r"));
+				//scan.useDelimiter(Pattern.compile("\\s\\r"));
+				//scan.useDelimiter(Pattern.compile("\\s?\\r"));
+				//scan.useDelimiter(Pattern.compile("\\n"));
 				scan.useDelimiter(",");
 				while(scan.hasNextLine()) {
 					System.out.println(scan.next());
@@ -162,7 +219,7 @@ file.close();
 
 		}
 		
-	Output:
+	Output of scan.useDelimiter(",") :
 
 		1
 		Iambharath
@@ -180,6 +237,34 @@ file.close();
 		David
 		QA Lead
 		4000 USD
+		
+	scan.useDelimiter(Pattern.compile("\\s\\r")):
+	
+		public static void createPersonFromCsv(File file) throws IOException {
+
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			char[] buffer = new char[(int)file.length()];
+			br.read(buffer);
+			Scanner scan  = new Scanner(new String(buffer));
+			scan.useDelimiter("\\s\\r");
+			while(scan.hasNext()) {
+				String next = scan.next();
+				System.out.println(next);
+			}
+
+
+		}
+		
+	Output:
+		1,Iambharath,Developer,5000 USD
+
+		2,Mani,Programmer,4000 USD
+
+		3,Avinash,Developer,5000 USD
+
+		4,David,QA Lead,4000 USD
+		
+	
 ---------------------------------------
 ## Java read file to String
 
