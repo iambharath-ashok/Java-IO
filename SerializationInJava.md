@@ -92,7 +92,27 @@
 	
 	-	Erlier serialized objects will not effect, it will start failing	
 	
-	
+	Output:
+			Exception in thread "main" java.io.InvalidClassException: serialization.Hosting; local class incompatible: stream classdesc serialVersionUID = -8922886121092364976, local class serialVersionUID = -3559576588472889564
+		at java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:621)
+		at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1623)
+		at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1518)
+		at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1774)
+		at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1351)
+		at java.io.ObjectInputStream.readObject(ObjectInputStream.java:371)
+		at java.util.ArrayList.readObject(ArrayList.java:791)
+		at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+		at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.lang.reflect.Method.invoke(Method.java:497)
+		at java.io.ObjectStreamClass.invokeReadObject(ObjectStreamClass.java:1017)
+		at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:1900)
+		at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1801)
+		at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1351)
+		at java.io.ObjectInputStream.readObject(ObjectInputStream.java:371)
+		at serialization.SerializationEx.desializeObject(SerializationEx.java:38)
+		at serialization.SerializationEx.main(SerializationEx.java:25)
+
 -------------------------------------------------------	
 ## ObjectInputStream in Java – read Object from File
 
